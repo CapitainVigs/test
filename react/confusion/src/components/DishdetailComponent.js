@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle } from 'reactstrap';
 
+
+
 class DishDetail extends Component {
 
 renderComments(comments){
@@ -9,17 +11,17 @@ renderComments(comments){
     const list = comments.map((comment) => {
          if (comment.comment!= null)
             return (
-              
+              <div className="container">
                 <li key={comment.id}>
                 <div>
                     {comment.comment}
                   </div>
                   <div>
-                    --{comment.author} {comment.date}
+                    --{comment.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
                 </div>
                 </li>
 
-             
+             </div>
             );
 
         else
