@@ -22,15 +22,6 @@ function RenderLeader(props) {
             );
         });
 
-        return (
-          <div className="container">
-            <div className="row">
-              <Media list>
-                  {leader}
-              </Media>
-            </div>
-          </div>
-        );
     }
 
 

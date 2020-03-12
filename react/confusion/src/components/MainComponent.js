@@ -8,11 +8,25 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+
+
+const mapStateToProps = state => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders
+  }
+}
 class Main extends Component {
+
+
+
 
   constructor(props) {
     super(props);
@@ -51,22 +65,22 @@ class Main extends Component {
 
 
 
-    return (
-          <div>
-          <Header  />
-          <Switch>
-          
-              
-              <Route path='/home' component={HomePage} />
-              <Route exact path='/contactus' component={Contact} />} />
-              <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
-              <Route path='/menu/:dishId' component={DishWithId} />
-              <Route path='/aboutus' component={() => <About leaders={this.state.leaders} />} />
-              <Redirect to="/home" />
 
+    return (
+      <div>
+        <Header />
+        <div>
+          <Switch>
+              <Route path='/home' component={HomePage} />
+              <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />} />} />
+              <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
+              <Route path='/menu/:dishId' component={DishWithId} />
+              <Route exact path='/contactus' component={Contact} />} />
+              <Redirect to="/home" />
           </Switch>
-          <Footer  />
-          </div>
+        </div>
+        <Footer />
+      </div>
     );
 
 
@@ -75,7 +89,5 @@ class Main extends Component {
 
 }
 
-         
-
-
-export default Main;
+       
+export default withRouter(connect(mapStateToProps)(Main));
