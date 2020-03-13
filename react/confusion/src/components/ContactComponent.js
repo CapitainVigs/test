@@ -4,6 +4,7 @@ import { Breadcrumb, BreadcrumbItem,
             Button, Row, Col, Label } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
+
 class Contact extends Component {
 
      constructor(props) {
@@ -76,10 +77,11 @@ class Contact extends Component {
         });
     }
 
-    handleSubmit(event) {
-        console.log('Current State is: ' + JSON.stringify(this.state));
-        alert('Current State is: ' + JSON.stringify(this.state));
-        //event.preventDefault();
+   
+    handleSubmit(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        // event.preventDefault();
     }
 
 
