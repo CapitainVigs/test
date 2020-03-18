@@ -16,7 +16,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
 class DishDetail extends Component {
 
 
-   renderComments(comments) {
+   renderComments(comments, addComment, dishId) {
         if (comments == null) {
             return (<div></div>)
         }
@@ -41,7 +41,7 @@ class DishDetail extends Component {
                 <ul className='list-unstyled'>
                     {cmnts}
                 </ul>
-                <CommentForm />
+                 <CommentForm dishId={dishId} addComment={addComment} />
             </div>
         )
     }
@@ -69,11 +69,14 @@ class DishDetail extends Component {
 
        const dish = this.props.dish
        const comments = this.props.comments
+       const addComment = this.props.addComment
+       const dishId = this.props.dish.id
         if (dish == null) {
             return (<div></div>)
         }
         const dishItem = this.renderDish(dish)
-        const commentItem = this.renderComments(comments)
+
+        const commentData= this.renderComments(comments, addComment,dishId )
         return (
           
                 <div className="container">
@@ -91,7 +94,8 @@ class DishDetail extends Component {
                 <div className="row">
                    
                          {dishItem}
-                        {commentItem}
+                         {commentData}
+           
                    
                 </div>
                 </div>
@@ -110,18 +114,29 @@ class CommentForm extends Component {
 
     constructor(props) {
         super(props);
-
+        
+    
         this.state = {
+            isNavOpen:false,
             isModalOpen: false
         };
         this.toggleModal_2 = this.toggleModal_2.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    
 
     toggleModal_2() {
         this.setState({
           isModalOpen: !this.state.isModalOpen
         });
       }
+
+    handleSubmit(values){
+        this.toggleModal_2();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+
+    }
 
  render() {
     return (
@@ -132,9 +147,9 @@ class CommentForm extends Component {
                          <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             
                             <Row className="form-group">
-                                <Label htmlFor="firstname" md={2}>Rating</Label>
+                                <Label htmlFor="rating" md={2}>Rating</Label>
                                 <Col md={10}>
-                                <Control.select model=".contactType" name="contactType"
+                                <Control.select model=".rating" name="rating"
                                         className="form-control">
                                         <option>1</option>
                                         <option>2</option>
@@ -142,7 +157,7 @@ class CommentForm extends Component {
                                     </Control.select>
                                     <Errors
                                         className="text-danger"
-                                        model=".firstname"
+                                        model=".rating"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
@@ -179,7 +194,7 @@ class CommentForm extends Component {
                             <Row className="form-group">
                                 <Label htmlFor="comment" md={2}>Comment</Label>
                                 <Col md={10}>
-                                    <Control.textarea model=".comment" id="comment" name="firstname"
+                                    <Control.textarea model=".comment" id="comment" name="comment"
                                         className="form-control"
                                         rows="6"
                                         validators={{
