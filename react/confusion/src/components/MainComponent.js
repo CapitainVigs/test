@@ -9,7 +9,7 @@ import Contact from './ContactComponent';
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { addComment, fetchDishes } from '../redux/ActionCreators';
+import { addComment, fetchDishes,fetchLeaders } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 const mapStateToProps = state => {
   return {
@@ -24,7 +24,10 @@ const mapStateToProps = state => {
   
     addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
     fetchDishes: () => { dispatch(fetchDishes())},
-    resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
+    resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
+    fetchLeaders: () => { dispatch(fetchLeaders())}
+    
+
   });
 
 
@@ -39,6 +42,7 @@ class Main extends Component {
 
    componentWillMount() {
     this.props.fetchDishes();
+    this.props.fetchLeaders();
   }
 
   onDishSelect(dishId) {
@@ -56,7 +60,10 @@ class Main extends Component {
               dishesLoading={this.props.dishes.isLoading}
               dishesErrMess={this.props.dishes.errMess}
               promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
-              leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+              leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
+              leadersLoading={this.props.leaders.isLoading}
+              leadersErrMess={this.props.leaders.errMess}
+              
           />
       );
     }
