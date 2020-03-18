@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Loading } from './LoadingComponent';
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
     Button, Modal, ModalHeader, ModalBody,
     Form, FormGroup, Input, Label,Card, CardImg, CardText, CardBody,
@@ -47,6 +47,7 @@ class DishDetail extends Component {
     }
 
     renderDish(dish) {
+
         if (dish != null) {
             return (
                 <div className='col-12 col-md-5 m-1'>
@@ -71,9 +72,29 @@ class DishDetail extends Component {
        const comments = this.props.comments
        const addComment = this.props.addComment
        const dishId = this.props.dish.id
-        if (dish == null) {
-            return (<div></div>)
+        
+       if(this.props.isLoading){
+         return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        } else if (this.props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{this.props.errMess}</h4>
+                    </div>
+                </div>
+            );
         }
+         else if (dish == null) {
+            return (<div></div>)
+        } 
+        else 
+        {
         const dishItem = this.renderDish(dish)
 
         const commentData= this.renderComments(comments, addComment,dishId )
@@ -100,7 +121,7 @@ class DishDetail extends Component {
                 </div>
                 </div>
             );
-            
+        }
 
     }
 
