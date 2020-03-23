@@ -68,10 +68,10 @@ class DishDetail extends Component {
  
   render() {
 
-       const dish = this.props.dish
-       const comments = this.props.comments
-       const addComment = this.props.addComment
-       const dishId = this.props.dish.id
+       const dish = this.props.dish;
+       const comments = this.props.comments;
+       const addComment = this.props.addComment;
+       const dishId = this.props.dish.id;
         
        if(this.props.isLoading){
          return(
