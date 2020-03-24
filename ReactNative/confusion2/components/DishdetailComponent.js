@@ -24,7 +24,7 @@ function RenderDish(props) {
 }
 
 
-class DishDetail extends Component {
+class Dishdetail extends Component {
 
     constructor(props) {
         super(props);
@@ -46,10 +46,5 @@ class DishDetail extends Component {
 }
 
 
-
-
-function Dishdetail(props) {
-    return(<RenderDish dish={props.dish} />);
-}
 
 export default Dishdetail;
