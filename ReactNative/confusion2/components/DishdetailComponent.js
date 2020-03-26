@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import React, { Component,useState } from 'react';
+import { Text, View, ScrollView, FlatList,StyleSheet,TouchableHighlight } from 'react-native';
+import { Card, Icon, Modal } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite } from '../redux/ActionCreators';
 
+
+  
 
 const mapStateToProps = state => {
     return {
@@ -20,18 +22,21 @@ const mapStateToProps = state => {
   });
 
 function RenderDish(props) {
+    const [modalVisible, setModalVisible] = useState(false);
 
     const dish = props.dish;
     
         if (dish != null) {
             return(
+        <ScrollView>
                 <Card
             featuredTitle={dish.name}
             image={{uri: baseUrl + dish.image}}>
                 <Text style={{margin: 10}}>
                     {dish.description}
                 </Text>
-                <Icon
+                <View >
+                    <Icon
                     raised
                     reverse
                     name={ props.favorite ? 'heart' : 'heart-o'}
@@ -39,8 +44,50 @@ function RenderDish(props) {
                     color='#f50'
                     onPress={() => props.favorite ? console.log('Already favorite') : props.onPress()}
                     />
+
+
+                   
+
+                </View>
             </Card>
-            );
+            <View >
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    }}
+                >
+                    <View>
+                    <View>
+                        <Text>Hello World!</Text>
+
+                        <TouchableHighlight
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                        >
+                        <Text >Hide Modal</Text>
+                        </TouchableHighlight>
+                    </View>
+                    </View>
+                </Modal>
+
+                
+                <TouchableHighlight
+       onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text >Show Modal</Text>
+      </TouchableHighlight>
+
+
+                
+                </View>
+        </ScrollView>
+             );
         }
         else {
             return(<View></View>);
@@ -76,8 +123,18 @@ function RenderComments(props) {
 
 class Dishdetail extends Component {
     
+    constructor(props) {
+        super(props);
 
-    
+        this.state = {
+            showModal: false
+        }
+    }
+
+
+    toggleModal() {
+        this.setState({showModal: !this.state.showModal});
+    }
 
      markFavorite(dishId) {
         this.props.postFavorite(dishId);
