@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text,ScrollView, View, StyleSheet, Picker, Switch, Button, Modal } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Text,ScrollView, View, StyleSheet, Picker, Switch, Button } from 'react-native';
+import { Modal } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 
 class Reservation extends Component {

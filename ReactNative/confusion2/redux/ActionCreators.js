@@ -155,3 +155,15 @@ export const addFavorite = (dishId) => ({
     type: ActionTypes.ADD_FAVORITE,
     payload: dishId
 });
+
+export const postComment = (dishId, rating, author, comment)  => (dispatch) => {
+
+        dispatch(addComments({
+            dishId: dishId,
+            rating: rating,
+            author: author,
+            comment: comment,
+            date:   new Date()
+        }));
+
+};
