@@ -55,8 +55,9 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => ({
     postFavorite: (dishId) => dispatch(postFavorite(dishId)),
     postComment: (dishId,rating, author,comment) => dispatch(postComment(dishId,rating, author,comment))
-    
   });
+
+  
 
 function RenderDish(props) {
     
@@ -189,22 +190,20 @@ class Dishdetail extends Component {
         }
     }
 
+    
 
     ratingCompleted(rating) {
         console.log("Rating is: " + rating);
-        alert("Rating is: " + rating);
         this.setState({rating:rating});
       }
 
       authorCompleted(text) {
         console.log("text is: " + text.nativeEvent.text);
-        alert("text is: " + text.nativeEvent.text);
         this.setState({author:text.nativeEvent.text});
       }
 
       commentCompleted(text) {
         console.log("text is: " + text.nativeEvent.text);
-        alert("text is: " + text.nativeEvent.text);
         this.setState({comment:text.nativeEvent.text});
       }
 
@@ -231,7 +230,9 @@ class Dishdetail extends Component {
 
     render() {
         const dishId = this.props.navigation.getParam('dishId','');
+
         return(
+            
         <ScrollView>
             <RenderDish dish={this.props.dishes.dishes[+dishId]}
                     favorite={this.props.favorites.some(el => el === dishId)}
@@ -243,9 +244,13 @@ class Dishdetail extends Component {
                     commentCompleted={(text) => this.commentCompleted(text)}
                     saveComment={() => this.saveComment(dishId)}
                     />
-
-            <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
+            
+            <RenderComments   comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} 
+            
+            
+            />
         </ScrollView>
+
         );
     }
 }
